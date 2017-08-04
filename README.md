@@ -1,9 +1,6 @@
 # DOC-HUNT
 A website that helps Seattle-ites find a doctor by aliment.  Uses data from the [betterDoctor API](https://developer.betterdoctor.com/documentation15#/).
 
-## Working site
-[Doc Hunt](https://tbd)
-
 ## Prerequisites
 * Node.js & Bower are installed.
 * You must also have a user_key for the betterDoctor API.  You can get that [here](https://developer.betterdoctor.com/)
