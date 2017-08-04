@@ -9,7 +9,18 @@
   <body>
     <div class="container">
       <h1>Pick a doctor</h1>
-        <div class="doc"></div>
+      <form id="form">
+        Search by aliment:<br>
+        <input type="text" id="search" name="search" placeholder="aliment here"><br>
+        <input type="submit" value="Find Doctors">
+      </form>
+        <div class="results"></div>
+        <script type="text/html" id="template">
+          <div class="docDiv">
+            <p class="docRow">{{last_name}},{{first_name}}: {{bio}}</p>
+            <p>Practice:{{practice}}</p><br/>
+          </div>
+        </script>
     </div>
   </body>
 </html>

@@ -5,8 +5,32 @@ var betterDoctor = require('./../app/scripts/betterdoctor.js');
 //UI LOGIC
 
 // UI callback function for dropdown
-var showDrInfo = function(allData) {
-  console.log(allData);
+var showDrInfo = function(bdData) {
+  console.log(bdData);
+
+  var searchResults = bdData.data;
+
+  var $template = $('#template'),
+    $row = $('.results');
+
+    var rows = [];
+    $.each(searchResults, function (index, friend) {
+        var templateHtml = $template.text()
+          .replace(/{{last_name}}/g, this.profile.last_name)
+          .replace(/{{first_name}}/g, this.profile.first_name)
+          .replace(/{{bio}}/g, this.profile.bio)
+          .replace(/{{practice}}/g, this.practices[0].name);
+        rows.push(templateHtml);
+    });
+
+    $row.html(rows); //Append them in the end
+
+//
+// $.each(searchResults, function() {
+//   $('.results').append(
+//       '<option value="'+this.id+'">'+this.name+'</option>'
+//   );
+// });
 
 };
 
@@ -14,8 +38,19 @@ var showDrInfo = function(allData) {
 //the document ready method
 $(document).ready(function() {
 
-  //basic API test
-  var test = new betterDoctor();
-  test.getDoctors("heart",showDrInfo);
+  $("#form").submit(function(event){
+    event.preventDefault();
+    var ailment = $("#search").val();
+    // if (validForm(submittedNum)) {
+    //   displayResults(pingPong(submittedNum));
+    // } else {
+    //   $("#inputNum").popover('show');
+    // }
+    var test = new betterDoctor();
+    test.getDoctors(ailment,showDrInfo);
+  }); // end of submit listener
+
+
+
 
 }); //end of jQuery ready
