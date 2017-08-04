@@ -1,0 +1,21 @@
+{
+  "name": "min-boilerplate",
+  "description": "Building  Gulp file",
+  "main": "index.js",
+  "authors": [
+    "Steve Zaske"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Epicodus-SZ/min-boilerplate-js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "bootstrap": "^3.3.7"
+  }
+}
