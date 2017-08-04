@@ -4,8 +4,9 @@ const $ = gulpLoadPlugins();
 
 const browserify = require('browserify');
 var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 // var concat = require('gulp-concat');
-//var uglify = require('gulp-uglify');
+var uglify = require('gulp-uglify');
 var utilities = require('gulp-util');
 var del = require('del');
 var jshint = require('gulp-jshint');
@@ -34,16 +35,6 @@ gulp.task('html', () => {
     .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
     .pipe($.if(/\.js$/, $.uglify({compress: {drop_console: true}})))
     .pipe($.if(/\.css$/, $.cssnano({safe: true, autoprefixer: false})))
-    // .pipe($.if(/\.html$/, $.htmlmin({
-    //   collapseWhitespace: true,
-    //   minifyCSS: true,
-    //   minifyJS: {compress: {drop_console: true}},
-    //   processConditionalComments: true,
-    //   removeComments: true,
-    //   removeEmptyAttributes: true,
-    //   removeScriptTypeAttributes: true,
-    //   removeStyleLinkTypeAttributes: true
-    // })))
     .pipe(gulp.dest('dist'));
 });
 
@@ -52,7 +43,16 @@ gulp.task('jsBrowserify', ['concatInterface'], function() {
   return browserify({ entries: ['./tmp/allConcat.js'] })
     .bundle()
     .pipe(source('app.js'))
-    .pipe(gulp.dest('./tmp/scripts'))
+    .pipe(gulp.dest('./tmp/scripts'));
+});
+
+// Converts node.js code, so it'll work in the browser
+gulp.task('proJsBrowserify', ['concatInterface'], function() {
+  return browserify({ entries: ['./tmp/allConcat.js'] })
+    .bundle()
+    .pipe(source('app.js'))
+    .pipe(buffer()) // <----- convert from streaming to buffered vinyl file object
+    .pipe(uglify()) // gulp-uglify, still not working :(
     .pipe(gulp.dest('./dist/scripts'));
 });
 
@@ -64,16 +64,18 @@ gulp.task('concatInterface', function() {
 });
 
 // Minifies the scripts
-gulp.task("productionScripts", ["jsBrowserify"], function(){
-  return gulp.src("./dist/scripts/app.js")
-    .pipe($.uglify())
-    .pipe(gulp.dest("./dist/scripts"));
-});
+// gulp.task("productionScripts", ["jsBrowserify"], function(){
+//   return gulp.src("./tmp/scripts/app.js")
+//     .pipe(buffer()) // <----- needed
+//     .pipe($.uglify())
+//     .pipe(gulp.dest("./dist/scripts"));
+// });
+
+
 
 // Builds a working web app, in the Dist folder.
 gulp.task("build", ['clean'], function(){
   if (buildProduction) {
-    gulp.start('productionScripts');
     gulp.start('productionCssBuild');
   } else {
     gulp.start('jsBrowserify');

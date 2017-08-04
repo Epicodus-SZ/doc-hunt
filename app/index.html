@@ -24,17 +24,24 @@
     <div class="container">
       <div class="header">
 
-        <h3 class="text-muted">docs hunt</h3>
+        <h3 class="text-muted">Doc Hunt</h3>
       </div>
 
       <div class="row">
-        <div class="col-lg-6">
-          <h1>Pick a doctor</h1>
-          <form id="form">
-            Search by aliment:<br>
-            <input type="text" id="search" name="search" placeholder="aliment here"><br>
-            <input type="submit" value="Find Doctors">
-          </form>
+        <div class="col-lg-12">
+          <div class="well bs-component">
+            <form id="form" class="form-horizontal">
+              <div class="form-group">
+                <label for="search" class="col-lg-2 control-label">Search</label>
+                <div class="col-lg-6">
+                  <input type="text" class="form-control" id="search" name="search" autocomplete="off" placeholder="Aliment">
+                </div>
+                <div class="col-lg-2">
+                  <button type="submit" class="btn btn-primary">Find Doctors</button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
       <div class="results"></div>
