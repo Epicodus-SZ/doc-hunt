@@ -1,26 +1,61 @@
-<html>
+<!doctype html>
+<html lang="">
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>doc hunt</title>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script> -->
+
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+    <script type="text/javascript" src="scripts/vendor.min.js"></script>
     <script type="text/javascript" src="scripts/app.js"></script>
     <link rel="stylesheet" href="styles/vendor.css">
     <link rel="stylesheet" href="styles/styles.css">
-    <title>Doc Hunt</title>
+
   </head>
   <body>
+    <!--[if IE]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
     <div class="container">
-      <h1>Pick a doctor</h1>
-      <form id="form">
-        Search by aliment:<br>
-        <input type="text" id="search" name="search" placeholder="aliment here"><br>
-        <input type="submit" value="Find Doctors">
-      </form>
-        <div class="results"></div>
-        <script type="text/html" id="template">
-          <div class="docDiv">
-            <p class="docRow">{{last_name}},{{first_name}}: {{bio}}</p>
-            <p>Practice:{{practice}}</p><br/>
-          </div>
-        </script>
+      <div class="header">
+
+        <h3 class="text-muted">docs hunt</h3>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <h1>Pick a doctor</h1>
+          <form id="form">
+            Search by aliment:<br>
+            <input type="text" id="search" name="search" placeholder="aliment here"><br>
+            <input type="submit" value="Find Doctors">
+          </form>
+        </div>
+      </div>
+      <div class="results"></div>
+
+      <div class="footer">
+        <p>♥ from Steve</p>
+      </div>
     </div>
+
+    <!-- results template -->
+    <script type="text/html" id="template">
+      <div class="docDiv">
+        <div class="docHead">
+          <p class="docRow"><span class="docName">{{last_name}},{{first_name}}</span>. <span class="docPractice">{{practice}}</span></p>
+        </div>
+        <div class="docBody">
+          <p class="docBioRow"><span class="docBioHeader">Bio:<span><span class="docBio">{{bio}}</p>
+          <p class="docPhoneRow"><span class="docPhoneHeader">Phone:<span><span class="docPhone">{{phone}}</p>
+              <br/>
+        </div>
+      </div>
+    </script>
   </body>
 </html>

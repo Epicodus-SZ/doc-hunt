@@ -25,6 +25,7 @@ var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var buildProduction = utilities.env.production;
 
+const reload = browserSync.reload;
 let dev = true;
 
 // Moves HTML files when building a distribution
@@ -51,6 +52,7 @@ gulp.task('jsBrowserify', ['concatInterface'], function() {
   return browserify({ entries: ['./tmp/allConcat.js'] })
     .bundle()
     .pipe(source('app.js'))
+    .pipe(gulp.dest('./tmp/scripts'))
     .pipe(gulp.dest('./dist/scripts'));
 });
 
@@ -72,11 +74,13 @@ gulp.task("productionScripts", ["jsBrowserify"], function(){
 gulp.task("build", ['clean'], function(){
   if (buildProduction) {
     gulp.start('productionScripts');
+    gulp.start('productionCssBuild');
   } else {
     gulp.start('jsBrowserify');
+    gulp.start('cssBuild');
   }
     gulp.start('bower');
-    gulp.start('cssBuild');
+
     gulp.start('html');
 });
 
@@ -98,6 +102,7 @@ gulp.task('bowerJS', function () {
   return gulp.src(lib.ext('js').files)
     .pipe($.concat('vendor.min.js'))
     .pipe($.uglify())
+    .pipe(gulp.dest('./tmp/scripts'))
     .pipe(gulp.dest('./dist/scripts'));
 });
 
@@ -105,25 +110,41 @@ gulp.task('bowerJS', function () {
 gulp.task('bowerCSS', function () {
   return gulp.src(lib.ext('css').files)
     .pipe($.concat('vendor.css'))
+    .pipe(gulp.dest('./tmp/styles'))
     .pipe(gulp.dest('./dist/styles'));
 });
 
 // tested ok
 gulp.task('bower', ['bowerJS', 'bowerCSS']);
 
-gulp.task('serve', ['jsBuild', 'cssBuild', 'html'],  function() {
+gulp.task('serve', ['jsBuild', 'bower', 'cssBuild', 'html'],  function() {
   browserSync.init({
     server: {
-      baseDir: "./dist",
+      baseDir: ['tmp', 'app'],
       index: "index.html"
     }
   });
 
-  gulp.watch(['js/*.js'], ['jsBuild']);
+  gulp.watch([
+    'app/*.html',
+    'app/images/**/*',
+    'tmp/fonts/**/*'
+  ]).on('change', reload);
+
+  gulp.watch(['app/scripts/*.js'], ['jsBuild']);
   gulp.watch(['bower.json'], ['bowerBuild']);
   gulp.watch(['*.html'], ['htmlBuild']);
-  gulp.watch(["scss/*.scss"], ['cssBuild']);
+  gulp.watch(["app/styles/*.scss"], ['cssBuild']);
 
+});
+
+gulp.task('serve:dist', ['jsBuild', 'bower', 'productionCssBuild', 'html'],  function() {
+  browserSync.init({
+    server: {
+      baseDir: ['tmp', 'app'],
+      index: "index.html"
+    }
+  });
 });
 
 gulp.task('jsBuild', ['jsBrowserify', 'lint', 'bower'], function(){
@@ -138,8 +159,18 @@ gulp.task('htmlBuild', function() {
   browserSync.reload();
 });
 
-// tested ok
+// Compile the CSS for development
 gulp.task('cssBuild', function() {
+  return gulp.src(['app/styles/*.scss'])
+    .pipe(sourcemaps.init())
+    .pipe(sass())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./tmp/styles'))
+    .pipe(browserSync.stream());
+});
+
+// Compile the CSS for distribution
+gulp.task('productionCssBuild', function() {
   return gulp.src(['app/styles/*.scss'])
     .pipe(sourcemaps.init())
     .pipe(sass())

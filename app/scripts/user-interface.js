@@ -7,9 +7,7 @@ var betterDoctor = require('./../app/scripts/betterdoctor.js');
 // UI callback function for dropdown
 var showDrInfo = function(bdData) {
   console.log(bdData);
-
   var searchResults = bdData.data;
-
   var $template = $('#template'),
     $row = $('.results');
 
@@ -19,18 +17,13 @@ var showDrInfo = function(bdData) {
           .replace(/{{last_name}}/g, this.profile.last_name)
           .replace(/{{first_name}}/g, this.profile.first_name)
           .replace(/{{bio}}/g, this.profile.bio)
+          .replace(/{{phone}}/g, this.practices[0].phones[0].number
+            .replace(/(\d{3})(\d{3})(\d{4})/, '($1)-$2-$3'))
           .replace(/{{practice}}/g, this.practices[0].name);
         rows.push(templateHtml);
     });
 
     $row.html(rows); //Append them in the end
-
-//
-// $.each(searchResults, function() {
-//   $('.results').append(
-//       '<option value="'+this.id+'">'+this.name+'</option>'
-//   );
-// });
 
 };
 

@@ -17,7 +17,6 @@ exports.apiKey = "<YOUR USER_KEY HERE>";
 ```
 4. Run `gulp serve`
 
-
 Direct questions and comments to: [github@zaske.com](mailto:github@zaske.com)
 
 ## Technologies Used
@@ -28,6 +27,7 @@ Direct questions and comments to: [github@zaske.com](mailto:github@zaske.com)
 * Google Fonts
 * Gulp
 * Bower
+* Sass
 
 ### License
 Copyright (c) 2017 Steve Zaske
