@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,50 +16,51 @@
     <link rel="stylesheet" href="styles/vendor.css">
     <link rel="stylesheet" href="styles/styles.css">
 
-  </head>
-  <body>
+</head>
+
+<body>
     <!--[if IE]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <div class="container">
-      <div class="header">
+        <div class="header">
 
-        <h3 class="text-muted">Doc Hunt</h3>
-      </div>
-
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="well bs-component">
-            <form id="form" class="form-horizontal">
-              <div class="form-group">
-                <label for="search" class="col-lg-2 control-label">Search</label>
-                <div class="col-lg-6">
-                  <input type="text" class="form-control" id="search" name="search" autocomplete="off" placeholder="Aliment">
-                </div>
-                <div class="col-lg-2">
-                  <button type="submit" class="btn btn-primary">Find Doctors</button>
-                </div>
-              </div>
-            </form>
-          </div>
+            <h3 class="text-muted">Doc Hunt</h3>
         </div>
-      </div>
-      <div class="results"></div>
 
-      <div class="footer">
-        <p>♥ from Steve</p>
-      </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="well bs-component">
+                    <form id="form" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="search" class="col-lg-2 control-label">Search</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" id="search" name="search" autocomplete="off" placeholder="Aliment">
+                            </div>
+                            <div class="col-lg-2">
+                                <button type="submit" class="btn btn-primary">Find Doctors</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="results"></div>
+
+        <div class="footer">
+            <p>♥ from Steve</p>
+        </div>
     </div>
 
     <!-- results template -->
     <script type="text/html" id="template">
-      <div class="docDiv">
-        <div class="docHead">
-          <p class="docRow"><span class="docName">{{last_name}},{{first_name}}</span>. <span class="docPractice">{{practice}}</span></p>
-        </div>
-        <div class="docBody">
-          <p class="docBioRow"><span class="docBioHeader">Bio:<span><span class="docBio">{{bio}}</p>
+        <div class="docDiv">
+            <div class="docHead">
+                <p class="docRow"><span class="docName">{{last_name}},{{first_name}}</span>. <span class="docPractice">{{practice}}</span></p>
+            </div>
+            <div class="docBody">
+                <p class="docBioRow"><span class="docBioHeader">Bio:<span><span class="docBio">{{bio}}</p>
           <p class="docPhoneRow"><span class="docPhoneHeader">Phone:<span><span class="docPhone">{{phone}}</p>
               <br/>
         </div>
